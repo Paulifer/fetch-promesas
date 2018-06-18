@@ -1,10 +1,13 @@
 window.onload = () => {
-  obtenerGatos();
-  dogesYCatesEnParalelo();
+  const btnDoges = document.getElementById(btnDoges);
+  btnDoges.addEventListener('click', ()=>{
+    btnDoges=document.getElementById('dogeReceptor').classList.remove('dNone');
+    btnDoges= document.getElementById('dogeReceptor').classList.add('dBlock')
+  })
 };
 
 //La función puede ser llamada desde cualquier parte
-function obtenerDoges() {
+/*function obtenerDoges() {
   var xhttp = new XMLHttpRequest(); //Objeto que representa la petición (request)
   xhttp.onreadystatechange = () => { //Evento cuando el estado haya cambiado (cuando esté listo) Se ejecutará cuando esté lista, cuando reciba la respuesta
     if (xhttp.readyState == 4 && xhttp.status == 200) { //Todas las respuestas “200 y algo” serán respuestas satisfactorias
@@ -26,7 +29,29 @@ function obtenerDoges() {
   /*
    * Podemos seguir ejecutando código acá mientras esperamos la respuesta
    */
-  console.log("Holi soy doge");
+ // console.log("Holi soy doge");
+//}
+function obtenerDoges() {
+  // Fetch retorna una promesa
+  fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=true`) //Recibe la URL donde se va a hacer la consulta
+    .then((response) => { //Este then es de la promesa del fetch
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Mala respuesta de gatitos");
+      }
+    }).then((dogesJson) => { //recibimos el JSON en este punto
+      //Este then es de la promesa de response.json()
+      const dogesReceptorDiv = document.getElementById("dogesReceptor");
+      for (let dogesIndex = 0; dogesIndex < dogesJson.length; dogesIndex++) {
+        const dogesImg = document.createElement('img'); //Aquí "almaceno" las imágenes
+        dogesImg.src = dogesJson[dogesIndex];
+        dogesReceptorDiv.appendChild(dogesImg);
+      }
+    })
+    .catch((error) => {
+      console.error("Holi soy un error " + error);
+    });
 }
 // Acá vamos a poner la función para obtener info de gatos
 function obtenerGatos() {
@@ -50,9 +75,31 @@ function obtenerGatos() {
     .catch((error) => {
       console.error("Holi soy un error " + error);
     });
+
+function obtenerBirds() {
+  // Fetch retorna una promesa
+  fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/birds?count=10&urls=true&httpsUrls=true`) //Recibe la URL donde se va a hacer la consulta
+    .then((response) => { //Este then es de la promesa del fetch
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Mala respuesta de gatitos");
+      }
+    }).then((birdsJson) => { //recibimos el JSON en este punto
+      //Este then es de la promesa de response.json()
+      const birdsReceptorDiv = document.getElementById("birdsReceptor");
+      for (let birdsIndex = 0; birdsIndex < birdsJson.length; birdsIndex++) {
+        const birdsImg = document.createElement('img'); //Aquí "almaceno" las imágenes
+        birdsImg.src = birdsJson[birdsIndex];
+        birdsReceptorDiv.appendChild(birdsImg);
+      }
+    })
+    .catch((error) => {
+      console.error("Holi soy un error " + error);
+    });
 }
 
-function dogesYCatesEnParalelo() {
+/*function dogesYCatesEnParalelo() {
   Promise.all([
     fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/cats?count=10&urls=true&httpsUrls=true`),
     fetch(`https://cors-anywhere.herokuapp.com/http://shibe.online/api/shibes?count=10&urls=true&httpsUrls=true`),
@@ -74,7 +121,7 @@ function dogesYCatesEnParalelo() {
             animalImg.src = animal;
             animalReceptorDiv.appendChild(animalImg);
         });
-    }); //Con forEach*/
+    }); //Con forEach
     for (let i = 0; i < catesDogesJson.length; ++i) {
       for (let j = 0; j < catesDogesJson[i].length; ++j) {
         const animalImg = document.createElement("img");
@@ -86,8 +133,4 @@ function dogesYCatesEnParalelo() {
 
   });
 }
-
-const btnDoges = document.getElementById(btnDoges);
-btnDoges.addEventListener('click', ()=>{
-  return obtenerGatos;
-})
+*/
